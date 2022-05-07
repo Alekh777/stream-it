@@ -1,15 +1,18 @@
 let socket = io();
 let btn = document.getElementById("btn");
 let video = document.querySelector("video");
+let btnPlay = document.getElementById('btnPlay');
+let btnPause = document.getElementById('btnPause');
 
-video.addEventListener('play', () => {
+btnPlay.onclick = function(){
     console.log('play');
     socket.emit('play');
-})
-video.addEventListener('pause', () => {
+}
+
+btnPause.onclick = function(){
     console.log('pause')
     socket.emit('pause');
-})
+}
 
 socket.on('pause', () => {
     console.log('paused')
