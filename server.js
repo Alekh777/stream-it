@@ -13,7 +13,13 @@ app.use('/', express.static(__dirname + '/public'))
 io.on('connection', (socket) => {
     console.log('connection ', socket.id)
 
-    socket.on('clicked', () => {
+    socket.on('play', () => {
+        console.log('played')
+        io.emit('play')
+    })
+
+    socket.on('pause', () => {
+        console.log('paused')
         io.emit('pause')
     })
 })
