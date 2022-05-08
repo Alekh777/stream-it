@@ -20,14 +20,9 @@ io.on('connection', (socket) => {
     console.log('users', users)
 
     function minTime(){
-        console.log('called');
-        console.log('paused users', pausedUsers);
         if(pausedUsers === users){
-            console.log(timeMap);
             const values = Object.values(timeMap);
-            console.log('values', values);
             let min = Math.min(...values);
-            console.log('min', min)
             io.emit('sync-video', {min});
             pausedUsers = 0;
         }
@@ -47,22 +42,19 @@ io.on('connection', (socket) => {
     socket.on('pause', () => {
         console.log('paused')
         io.emit('pause');
-        pausedUsers++;
     })
     
     socket.on('timestamp', (data) => {
+        pausedUsers++;
+        console.log('timestamp')
         if(data.seeking){
             let min = data.currTime;
             io.emit('sync-video', {min});
             return;
         }
         let currTime = data.currTime;
-        console.log(currTime, socket.id);
-        let id = socket.id
-        console.log('users inside', users)
         timeMap[socket.id] = currTime;
         minTime();
-        console.log('pausedUsers inside', pausedUsers);
     })
 })
 

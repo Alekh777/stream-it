@@ -1,7 +1,17 @@
 let socket = io();
 let video = document.querySelector("video");
-let btnPlay = document.getElementById("btnPlay");
-let btnPause = document.getElementById("btnPause");
+let btn = document.getElementById("play-pause");
+
+btn.onclick = function(){
+  if(video.paused){
+    video.play();
+    socket.emit('play');
+  }
+  else{
+    video.pause();
+    socket.emit('pause');
+  }
+}
 
 function seeked(){
     let currTime = video.currentTime;
@@ -9,18 +19,6 @@ function seeked(){
     socket.emit("timestamp", { currTime, seeking });
     console.log('seeked')
 }
-
-video.addEventListener("play", () => {
-    console.log("play");
-    seeked();
-    socket.emit("play");
-});
-
-video.addEventListener("pause", () => {
-    console.log("pause")
-    seeked();
-    socket.emit("pause");
-});
 
 socket.on("pause", () => {
     video.pause()
@@ -31,9 +29,6 @@ socket.on("pause", () => {
 
 socket.on("play", () => {
     video.play()
-    .then(() => {
-        console.log('PLAYED');
-    })
     console.log("played");
 });
 
