@@ -1,6 +1,7 @@
 let socket = io();
 let video = document.querySelector("video");
 let btn = document.getElementById("play-pause");
+let seek = document.getElementById("seek");
 
 btn.onclick = function(){
   if(video.paused){
@@ -13,6 +14,9 @@ btn.onclick = function(){
   }
 }
 
+seek.onclick = function(){
+    seeked();
+}
 function seeked(){
     let currTime = video.currentTime;
     let seeking = true;

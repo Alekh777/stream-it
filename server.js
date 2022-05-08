@@ -46,13 +46,13 @@ io.on('connection', (socket) => {
     })
     
     socket.on('timestamp', (data) => {
-        pausedUsers++;
         console.log('timestamp')
         if(data.seeking){
             let min = data.currTime;
             io.emit('sync-video', {min});
             return;
         }
+        pausedUsers++;
         let currTime = data.currTime;
         timeMap[socket.id] = currTime;
         minTime();
