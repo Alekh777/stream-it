@@ -25,6 +25,7 @@ io.on('connection', (socket) => {
             let min = Math.min(...values);
             io.emit('sync-video', {min});
             pausedUsers = 0;
+            timeMap = {};
         }
     }
 
